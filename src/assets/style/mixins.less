@@ -1,0 +1,28 @@
+//俩个都会编译
+/*.abc {
+    width: 100px;
+    height: 100px;
+}
+
+.box {
+    .abc();
+}
+
+// css不识别函数写法，
+.abc2(@width, @height) {
+    width: @width;
+    height: @height;
+}
+
+.box2 {
+    .abc2(200px, 200px);
+}*/
+
+.hoverShadow() {
+    transition: all, 0.5;
+
+    &:hover {
+        transform: translate3d(0, 3px, 0);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+}
