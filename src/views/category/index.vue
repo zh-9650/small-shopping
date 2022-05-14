@@ -75,12 +75,14 @@ export default {
     const getSubList = () => {
       findTopCategory(route.params.id).then(data => {
         subList.value = data.result
-        // console.log(data.result);
+        console.log(data.result);
       })
     }
 
     watch(() => route.params.id, (newVal) => {
-      if (newVal && `category/${route.params.id}` === route.path) getSubList()
+      if (newVal && `/category/${route.params.id}` === route.path) {
+        getSubList()
+      }
     }, { immediate: true })
 
     return {

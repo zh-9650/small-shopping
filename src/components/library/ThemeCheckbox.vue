@@ -19,6 +19,7 @@ export default {
     }
   },
   setup(props, { emit }) {
+    // 普通实现
     // const checked = ref(false)
     // const changeChecked = () => {
     //   checked.value = !checked.value
@@ -27,6 +28,7 @@ export default {
     // watch(() => { return props.modelValue }, () => {
     //   checked.value = props.modelValue
     // }, { immediate: true })
+    // 插件实现
     const checked = useVModel(props, 'modelValue', emit)
     const changeChecked = () => {
       const newVal = !checked.value
