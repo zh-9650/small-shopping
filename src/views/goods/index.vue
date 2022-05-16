@@ -1,5 +1,5 @@
 <template>
-  <div class="xtx-goods-page">
+  <div class="xtx-goods-page" v-if="goods">
     <div class="container">
       <!-- 面包屑 -->
       <ThemeBread>
@@ -13,9 +13,17 @@
         <ThemeBreadItem>{{ goods.name }}</ThemeBreadItem>
       </ThemeBread>
       <!-- 商品信息 -->
-      <div class="goods-info"></div>
+      <div class="goods-info">
+        <div class="media">
+          <GoodsImage :images="goods.mainPictures" />
+          <GoodsSales />
+        </div>
+        <div class="spec">
+          <GoodsName :goods="goods" />
+        </div>
+      </div>
       <!-- 商品推荐 -->
-      <GoodsRelevant v-if="goods" />
+      <GoodsRelevant />
       <!-- 商品详情 -->
       <div class="goods-footer">
         <div class="goods-article">
@@ -34,12 +42,15 @@
 <script>
 import { ref } from '@vue/reactivity'
 import GoodsRelevant from './components/GoodsRelevant.vue'
+import GoodsImage from './components/GoodsImage.vue'
+import GoodsSales from './components/GoodsSales.vue'
+import GoodsName from './components/GoodsName.vue'
 import { useRoute } from 'vue-router'
 import { findGoods } from '../../api/product.js'
 import { watch } from '@vue/runtime-core'
 export default {
   name: 'ThemeGoodsPage',
-  components: { GoodsRelevant },
+  components: { GoodsRelevant, GoodsImage, GoodsSales, GoodsName },
   setup() {
     const goods = useGoods()
     return { goods }
@@ -52,7 +63,7 @@ const useGoods = () => {
     if (newVal && `/product/${newVal}` === route.path) {
       findGoods(route.params.id).then(data => {
         goods.value = data.result
-        console.log(goods.value)
+        // console.log(goods.value)
       })
     }
   }, { immediate: true })
@@ -64,6 +75,16 @@ const useGoods = () => {
 .goods-info {
   min-height: 600px;
   background: #fff;
+  display: flex;
+  .media {
+    width: 580px;
+    height: 600px;
+    padding: 30px 50px;
+  }
+  .spec {
+    flex: 1;
+    padding: 30px 30px 30px 0;
+  }
 }
 .goods-footer {
   display: flex;
