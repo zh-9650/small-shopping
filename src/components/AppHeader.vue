@@ -1,7 +1,7 @@
 <template>
   <header class="app-header">
     <div class="container">
-      <h1 class="logo"><RouterLink to="/">小兔鲜</RouterLink></h1>
+      <h1><RouterLink to="/">易优选</RouterLink></h1>
       <AppHeaderNav />
       <div class="search">
         <i class="iconfont icon-search"></i>
