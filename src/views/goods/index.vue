@@ -20,11 +20,15 @@
         </div>
         <div class="spec">
           <GoodsName :goods="goods" />
-          <GoodsSku :goods="goods" />
+          <GoodsSku :goods="goods" @change="changeSku" />
+          <ThemeNumber label="数量" v-model="num" :max="goods.inventory" />
+          <ThemeButton type="primary" style="margin-top: 20px"
+            >加入购物车</ThemeButton
+          >
         </div>
       </div>
       <!-- 商品推荐 -->
-      <GoodsRelevant />
+      <GoodsRelevant :goodsId="goods.id" />
       <!-- 商品详情 -->
       <div class="goods-footer">
         <div class="goods-article">
@@ -55,7 +59,15 @@ export default {
   components: { GoodsRelevant, GoodsImage, GoodsSales, GoodsName, GoodsSku },
   setup() {
     const goods = useGoods()
-    return { goods }
+    const changeSku = (sku) => {
+      if (sku.skuId) {
+        goods.value.price = sku.price
+        goods.value.oldPrice = sku.oldPrice
+        goods.value.inventory = sku.inventory
+      }
+    }
+    const num = ref(1)
+    return { goods, changeSku, num }
   }
 }
 const useGoods = () => {
