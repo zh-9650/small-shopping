@@ -33,12 +33,16 @@
       <div class="goods-footer">
         <div class="goods-article">
           <!-- 商品+评价 -->
-          <div class="goods-tabs"></div>
+          <GoodsTabs></GoodsTabs>
           <!-- 注意事项 -->
-          <div class="goods-warn"></div>
+          <GoodsWarn />
         </div>
         <!-- 24热榜+专题推荐 -->
-        <div class="goods-aside"></div>
+        <div class="goods-aside">
+          <GoodsHot :goodsId="goods.id" :type="1" />
+          <GoodsHot :goodsId="goods.id" :type="2" />
+          <GoodsHot :goodsId="goods.id" :type="3" />
+        </div>
       </div>
     </div>
   </div>
@@ -51,14 +55,18 @@ import GoodsImage from './components/GoodsImage.vue'
 import GoodsSales from './components/GoodsSales.vue'
 import GoodsName from './components/GoodsName.vue'
 import GoodsSku from './components/GoodsSku.vue'
+import GoodsTabs from './components/GoodsTabs.vue'
+import GoodsHot from './components/GoodsHot.vue'
+import GoodsWarn from './components/GoodsWarn.vue'
 import { useRoute } from 'vue-router'
 import { findGoods } from '../../api/product.js'
-import { watch } from '@vue/runtime-core'
+import { provide, watch } from '@vue/runtime-core'
 export default {
   name: 'ThemeGoodsPage',
-  components: { GoodsRelevant, GoodsImage, GoodsSales, GoodsName, GoodsSku },
+  components: { GoodsRelevant, GoodsImage, GoodsSales, GoodsName, GoodsSku, GoodsTabs, GoodsHot, GoodsWarn },
   setup() {
     const goods = useGoods()
+    provide('goods', goods)
     const changeSku = (sku) => {
       if (sku.skuId) {
         goods.value.price = sku.price
@@ -111,14 +119,5 @@ const useGoods = () => {
     width: 280px;
     min-height: 1000px;
   }
-}
-.goods-tabs {
-  min-height: 600px;
-  background: #fff;
-}
-.goods-warn {
-  min-height: 600px;
-  background: #fff;
-  margin-top: 20px;
 }
 </style>

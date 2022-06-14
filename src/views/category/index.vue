@@ -75,7 +75,7 @@ export default {
     const getSubList = () => {
       findTopCategory(route.params.id).then(data => {
         subList.value = data.result
-        console.log(data.result);
+        // console.log(data.result);
       })
     }
 

@@ -7,9 +7,20 @@
         :key="i"
         :class="{ fade: index === i }"
       >
-        <RouterLink to="/">
+        <RouterLink v-if="item.hrefUrl" :to="item.hrefUrl">
           <img :src="item.imgUrl" alt="" />
         </RouterLink>
+        <div v-else class="slider">
+          <RouterLink
+            v-for="goods in item"
+            :key="goods.id"
+            :to="`/product/${goods.id}`"
+          >
+            <img :src="goods.picture" alt="" />
+            <p class="name ellipsis">{{ goods.name }}</p>
+            <p class="price">&yen;{{ goods.price }}</p>
+          </RouterLink>
+        </div>
       </li>
     </ul>
     <a href="javascript:;" class="carousel-btn prev" @click="toggle(-1)"
@@ -50,6 +61,7 @@ export default {
   setup(props) {
     // 控制图片切换变量
     const index = ref(0)
+    // console.log(props.sliders);
     let timer = null
     // 定义自动轮播方法
     const autoPlayFn = () => {
@@ -78,6 +90,7 @@ export default {
     }
     // 实现左右切换按钮
     const toggle = (step) => {
+      // console.log(props.sliders);
       const newIndex = index.value + step
       if (newIndex > (props.sliders.length - 1)) {
         index.value = 0
@@ -97,6 +110,7 @@ export default {
 }
 </script>
 <style scoped lang="less">
+@import url("../../assets/style/variables.less");
 .xtx-carousel {
   width: 100%;
   height: 100%;
@@ -171,6 +185,30 @@ export default {
   &:hover {
     .carousel-btn {
       opacity: 1;
+    }
+  }
+}
+.slider {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 40px;
+  > a {
+    width: 240px;
+    text-align: center;
+    img {
+      padding: 20px;
+      width: 230px !important;
+      height: 230px !important;
+    }
+    .name {
+      font-size: 16px;
+      color: #666;
+      padding: 0 40px;
+    }
+    .price {
+      font-size: 16px;
+      color: @priceColor;
+      margin-top: 15px;
     }
   }
 }
