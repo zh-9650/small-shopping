@@ -4,7 +4,7 @@ import router from '../router/index'
 
 // 创建实列
 const instance = axios.create({
-  baseURL: 'https://apipc-xiaotuxian-front.itheima.net/',
+  baseURL: 'https://mock.boxuegu.com/mock/1175/',
   timeout: 5000,
 })
 
